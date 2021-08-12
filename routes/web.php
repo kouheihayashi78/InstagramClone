@@ -20,4 +20,5 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\PostsController::class, 'index'])->name('home');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/users/{user_id}', [App\Http\Controllers\PostsController::class, 'show'])->name('show');
 });
