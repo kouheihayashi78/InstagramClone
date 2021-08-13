@@ -21,5 +21,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [App\Http\Controllers\PostsController::class, 'index'])->name('home');
     Route::get('/users/{user_id}', [App\Http\Controllers\PostsController::class, 'show'])->name('show');
     Route::get('/edit', [App\Http\Controllers\PostsController::class, 'edit'])->name('edit');
-    Route::post('update', [App\Http\Controllers\PostsController::class, 'update'])->name('update');
+    Route::post('/users/update', [App\Http\Controllers\PostsController::class, 'update'])->name('update');
 });
