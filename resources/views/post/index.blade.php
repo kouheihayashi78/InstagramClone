@@ -12,12 +12,18 @@
                     @if ($post->user->profile_photo)
                     <img class="post-profile-icon round-img" src="{{ asset('storage/user_images/' . $post->user->profile_photo) }}">
                     @else
-                    <img class="post-profile-icon round-img" src="{{ asset('images/blank_profile.png') }}" >
+                    <img class="post-profile-icon round-img" src="{{ asset('images/blank_profile.png') }}">
                     @endif
                 </a>
                 <a class="black-color no-text-decoration" href="/users/{{ $post->user->id }}">
                     {{ $post->user->name }}
                 </a>
+                @if ($post->user->id == Auth::user()->id)
+                <a class="ml-auto mx-0 my-auto" rel="nofollow" href="/delete/{{ $post->id }}">
+                    <div class="delete-post-icon">
+                    </div>
+                </a>
+                @endif
             </div>
             <a href="/users/{{ $post->user->id }}">
                 <img src="/storage/post_images/{{ $post->id }}.jpg" class="card-img-top">

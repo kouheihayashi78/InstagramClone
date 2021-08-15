@@ -25,4 +25,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/posts/new', [App\Http\Controllers\PostsController::class, 'new'])->name('new');
     Route::post('/posts', [App\Http\Controllers\PostsController::class, 'store'])->name('store');
+    Route::get('/delete/{post_id}', [App\Http\Controllers\PostsController::class, 'delete'])->name('delete');
 });

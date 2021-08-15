@@ -83,4 +83,12 @@ class PostsController extends Controller
 
         return redirect('/');
     }
+    
+    public function delete($post_id)
+    {
+        $post = Post::find($post_id);
+        // $post = Auth::user()->posts->where('id', $post_id);
+        $post->delete();
+        return redirect('/');
+    }
 }
