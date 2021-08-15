@@ -3,16 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Post;
 use Auth;
 use Illuminate\Http\Request;
 use Validator;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        // テンプレート「post/index.blade.php」を表示します。
-        return view('post/index');
+        $posts = Post::limit(10)->orderBy('created_at', 'DESC')->get();
+        // limit(10)は取り出すレコード上限(最大１０個)
+        return view('post/index', compact('posts'));
     }
 
     public function show($user_id)
@@ -34,8 +41,9 @@ class PostsController extends Controller
             'user_name' => 'required|string|max:255',
             'user_password' => 'required|string|min:6|confirmed',
         ]);
-
-        if ($validator->fails()) {
+        // バリデーションの結果がエラーの場合
+        if ($validator->fails()) 
+        {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
         $user = User::find($request->id);
@@ -48,5 +56,31 @@ class PostsController extends Controller
         $user->save();
 
         return redirect('/users/' . $request->id);
+    }
+
+    public function new()
+    {
+        return view('post/new');
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'content' => 'required|max:255',
+            'photo' => 'required'
+        ]);
+
+        if ($validator->fails()) 
+        {
+            return redirect()->back()->withErrors($validator->errors())->withInput();
+        }
+        $post = new Post;
+        $post->content = $request->content;
+        $post->user_id = Auth::user()->id;
+        $post->save();
+
+        $request->photo->storeAs('public/post_images', $post->id.'.jpg');
+
+        return redirect('/');
     }
 }

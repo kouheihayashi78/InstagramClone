@@ -14,9 +14,9 @@ class AddProfilePhotoToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            // ==========ここから追加する==========
+            
             $table->string('profile_photo')->nullable();
-            // ==========ここまで追加する==========
+            
         });
     }
 
@@ -28,9 +28,9 @@ class AddProfilePhotoToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            // ==========ここから追加する==========
+            
             $table->string('profile_photo');
-            // ==========ここまで追加する==========
+            
         });
     }
 }

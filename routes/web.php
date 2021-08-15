@@ -22,4 +22,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users/{user_id}', [App\Http\Controllers\PostsController::class, 'show'])->name('show');
     Route::get('/edit', [App\Http\Controllers\PostsController::class, 'edit'])->name('edit');
     Route::post('/users/update', [App\Http\Controllers\PostsController::class, 'update'])->name('update');
+
+    Route::get('/posts/new', [App\Http\Controllers\PostsController::class, 'new'])->name('new');
+    Route::post('/posts', [App\Http\Controllers\PostsController::class, 'store'])->name('store');
 });

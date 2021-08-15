@@ -1,16 +1,29 @@
 @extends('layouts.auth')
-
 @include('navbar')
+@include('footer')
 
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-
-<a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
-    サインアウト<br/>
-</a>
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-{{ csrf_field() }}
-</form>
-<p>このページは仮のトップページです。</p>
-<a href="#" class="btn btn-primary">仮のボタンです</a>
+@foreach ($posts as $post)
+<div class="col-md-8 col-md-2 mx-auto">
+    <div class="card-wrap">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <a class="no-text-decoration" href="/users/{{ $post->user->id }}">
+                    @if ($post->user->profile_photo)
+                    <img class="post-profile-icon round-img" src="{{ asset('storage/user_images/' . $post->user->profile_photo) }}">
+                    @else
+                    <img class="post-profile-icon round-img" src="{{ asset('images/blank_profile.png') }}" >
+                    @endif
+                </a>
+                <a class="black-color no-text-decoration" href="/users/{{ $post->user->id }}">
+                    {{ $post->user->name }}
+                </a>
+            </div>
+            <a href="/users/{{ $post->user->id }}">
+                <img src="/storage/post_images/{{ $post->id }}.jpg" class="card-img-top">
+            </a>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection

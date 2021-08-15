@@ -3,7 +3,7 @@
   <div class="container">
     <div class="text-center">
       <p>
-        Copyright © Techpit
+        Copyright © Kohei Hayashi
       </p>
     </div>
   </div>
