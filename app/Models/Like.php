@@ -2,25 +2,20 @@
 
 namespace App\Models;
 
-use Auth;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Like extends Model
 {
     use HasFactory;
+
     public function user()
     {
         return $this->belongsTo('App\Models\User');
     }
-    
-    public function likes()
-    {
-        return $this->hasMany('App\Models\Like');
-    }
 
-    public function likedBy($user)
+    public function post()
     {
-        return Like::where('user_id', $user->id)->where('post_id', $this->id);
+        return $this->belongsTo('App\Models\Post');
     }
 }
