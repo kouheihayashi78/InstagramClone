@@ -42,6 +42,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Like');
     }
 
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
+
     /**
      * The attributes that should be cast to native types.
      *

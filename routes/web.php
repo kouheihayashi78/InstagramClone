@@ -29,4 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
     // いいね機能
     Route::get('/posts/{post_id}/likes', [App\Http\Controllers\LikesController::class, 'store'])->name('store');
     Route::get('/likes/{like_id}', [App\Http\Controllers\LikesController::class, 'delete'])->name('delete');
+    // コメント機能
+    Route::post('/posts/{comment_id}/comments', [App\Http\Controllers\CommentsController::class, 'store'])->name('store');
+    Route::get('/comments/{comment_id}', [App\Http\Controllers\CommentsController::class, 'delete'])->name('delete');
+
 });

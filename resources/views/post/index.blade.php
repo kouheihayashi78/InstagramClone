@@ -1,7 +1,14 @@
 @extends('layouts.auth')
 @include('navbar')
 @include('footer')
-
+<div id="loadingScreen" class="loading">
+    <div class="loading__animation-box">
+        <p>Now loading...</p><!-- 1 -->
+        <span></span><!-- 2 -->
+        <span></span><!-- 3 -->
+        <span></span><!-- 4 -->
+    </div>
+</div>
 @section('content')
 @foreach ($posts as $post)
 <div class="col-md-8 col-md-2 mx-auto">
@@ -33,7 +40,8 @@
             <div class="card-body">
                 <div class="row parts">
                     <div id="like-icon-post-{{ $post->id }}">
-                        @if ($post->likedBy(Auth::user())->count() > 0) <!-- 投稿にサインインしているユーザーのいいねがあるかどうか判断 -->
+                        @if ($post->likedBy(Auth::user())->count() > 0)
+                        <!-- 投稿にサインインしているユーザーのいいねがあるかどうか判断 -->
                         <a class="loved hide-text" data-remote="true" rel="nofollow" data-method="DELETE" href="/likes/{{ $post->likedBy(Auth::user())->firstOrFail()->id }}">いいねを取り消す</a>
                         @else
                         <a class="love hide-text" data-remote="true" rel="nofollow" data-method="POST" href="/posts/{{ $post->id }}/likes">いいね</a>
@@ -45,8 +53,25 @@
                     @include('post.like_text')
                 </div>
                 <div>
-                    <span>{{ $post->user->name }}</span>
-                    <span>{{ $post->caption }}</span>
+                    <strong><span>{{ $post->user->name }}</span></strong>
+                    <span>{{ $post->content }}</span>
+
+                    <!-- コメント欄 -->
+                    <div id="comment-post-{{ $post->id }}">
+                        @include('post.comment_list')
+                    </div>
+                    <br>
+                    <a class="light-color post-time no-text-decoration" href="/posts/{{ $post->id }}">{{ $post->created_at }}</a>
+                    <hr>
+                    <div class="row actions" id="comment-form-post-{{ $post->id }}">
+                        <form class="w-100" id="new_comment" action="/posts/{{ $post->id }}/comments" accept-charset="UTF-8" data-remote="true" method="post">
+                            <input name="utf8" type="hidden" value="&#x2713;" />
+                            {{csrf_field()}}
+                            <input value="{{ Auth::user()->id }}" type="hidden" name="user_id" />
+                            <input value="{{ $post->id }}" type="hidden" name="post_id" />
+                            <input class="form-control comment-input border-0" placeholder="コメント ..." autocomplete="off" type="text" name="comment" />
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
