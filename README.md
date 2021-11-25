@@ -7,7 +7,7 @@ TECH I.S.の課題でTwitterCloneを作成した時、同じSNSであるInstagra
  
 
 # URL  
-http://laravel-management-kouhei.herokuapp.com
+http://evening-shelf-52346.herokuapp.com/
 
 # 機能一覧 
 ログイン機能  
